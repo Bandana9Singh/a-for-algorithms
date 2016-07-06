@@ -1,0 +1,62 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <climits>
+using namespace std;
+
+
+int main() {
+    int n,m,i,j;
+    cin>>n>>m;
+    int arr[n][n],x,y,r,not_visited[n],start,min,index; bool visible[n];
+    long int sum=0;
+    for(i=0;i<n;i++){
+        not_visited[i]=INT_MAX;
+        visible[i]=false;
+        for(j=0;j<n;j++)
+            arr[i][j]=-1;
+    }    
+    for(i=0;i<m;i++){
+        cin>>x>>y>>r;
+        x--;y--;
+       
+        if(arr[x][y]&&arr[x][y]<r){
+           arr[x][y]=r;
+           arr[y][x]=r;
+        }
+        else{
+            arr[x][y]=r;
+            arr[y][x]=r;
+        }
+    }       
+ /*   for(i=0;i<n;i++){
+        for(j=0;j<n;j++)
+          cout<<arr[i][j];
+        cout<<endl;
+    }*/
+    cin>>start;
+    start--;
+   // cout<<start;
+   // visible[start]=true;
+    not_visited[start]=0;
+    for(i=0;i<n;i++){
+        min=INT_MAX;
+        for(j=0;j<n;j++){
+           if(not_visited[j]<min&&!visible[j]){
+             min=not_visited[j];
+             index=j;
+           }
+        }
+        visible[index]=true;
+        sum+=min;
+       // cout<<index<<" "<<min<<" "<<endl;
+        for(j=0;j<n;j++){
+            if(arr[index][j]!=-1&&!visible[j]&&arr[index][j]<not_visited[j])
+                not_visited[j]=arr[index][j];
+        }
+    }
+    cout<<sum<<endl;
+    return 0;
+}
