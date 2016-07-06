@@ -1,0 +1,62 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <climits>
+#include <deque>
+using namespace std;
+//typedef long int int_max=numeric_limits<long int>::max();
+
+int main() {
+    int n,m,i,j,k,a,b,c,rem;
+    cin>>n>>m;
+    long long int arr[n][n],sum=0;
+    deque<long long int> d; 
+    for(i=0;i<n;i++){
+        for(j=0;j<n;j++)
+           if(i==j)
+             arr[i][j]=0;
+            else
+             arr[i][j]=numeric_limits<long long int>::max();
+    }
+ /*   for(i=0;i<n;i++){
+        for(j=0;j<n;j++)
+        cout<<arr[i][j]<<" ";
+        cout<<endl;
+    }*/
+    for(i=0;i<m;i++){
+        cin>>a>>b>>c;
+        a--;b--;
+        if(a!=b&&arr[a][b]>pow(2,c)&&arr[b][a]>pow(2,c))
+             arr[a][b]=arr[b][a]=pow(2,c);
+    }
+     
+    for(k=0;k<n;k++)
+        for(i=0;i<n;i++)
+          for(j=0;j<n;j++){
+            if(i!=j && arr[i][k]!=numeric_limits<long long int>::max() && arr[k][j]!=numeric_limits<long long int>::max() &&arr[i][j]>arr[i][k]+arr[k][j])
+                arr[i][j]=arr[i][k]+arr[k][j];
+         }
+   for(i=1;i<n;i++){
+        for(j=0;j<i;j++)
+            sum+=arr[i][j];
+    } 
+ while(sum>=1)
+{
+  rem = sum%2;
+  d.push_front(rem);
+  sum /= 2;
+}
+    while (!d.empty())
+  {
+    cout<< d.front();
+    d.pop_front();
+  }
+    /*for(int n : d) {
+        cout << n ;
+    }*/
+    cout<<endl;
+ //   cout << numeric_limits<long long int>::max() <<endl;
+    return 0;
+}
