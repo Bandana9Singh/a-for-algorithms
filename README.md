@@ -1,2 +1,2 @@
-A curated collection of Algorithms that can come handy.
+A curated collection of Algorithms.
 Feel free to collaborate in any programming language. 
