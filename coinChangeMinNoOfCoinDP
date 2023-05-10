@@ -1,0 +1,41 @@
+/**
+ * Change change, min number of coins needed to get amount, DP
+ * Leetcode: 322, passed all test cases
+ **/
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int i, j, len = coins.length;
+        int T[][] = new int[len+1][amount+1];
+
+        for (i = 0; i < len+1; i++) {
+            T[i][0] = 0;
+        }
+        
+        for (j = 0; j < amount+1; j++) {
+            T[0][j] = Integer.MAX_VALUE - 1;
+        }
+
+        for (j = 1; j< amount+1; j++) {
+            if (j % coins[0] == 0) {
+                T[1][j] = j / coins[0];
+            } else {
+                T[1][j] = Integer.MAX_VALUE - 1;
+            }
+        }
+
+        for (i = 2; i < len+1; i++) {
+            for (j = 1; j < amount+1; j++) {
+                if (coins[i-1] <= j) {
+                    T[i][j] = Math.min(1+T[i][j-coins[i-1]], T[i-1][j]);
+                } else {
+                    T[i][j] = T[i-1][j];
+                }
+            }
+        }
+        if (T[len][amount] == Integer.MAX_VALUE - 1) {
+            return -1;
+        }
+        return T[len][amount];
+    }
+}
