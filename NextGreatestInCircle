@@ -1,0 +1,34 @@
+/**
+ * Solved with Stack, O(n)
+ * Leetcode: 503, all test cases passed
+ **/
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int i, len = nums.length;
+        int[] vector = new int [len];
+        Stack<Integer> stack = new Stack<Integer>();
+        for (i = len-1; i >= 0; i--) {
+            stack.push(nums[i]);
+        }
+        for(i = len-1; i >= 0; i--) {
+            if(stack.size() == 0) {
+                vector[i] = -1;
+            }
+            else if (stack.size() != 0 && stack.peek() > nums[i]) {
+                vector[i] = stack.peek();
+            }
+            else if (stack.size() != 0 && stack.peek() <= nums[i]) {
+                while (stack.size() != 0 && stack.peek() <= nums[i]) {
+                    stack.pop();
+                }
+                if (stack.size() == 0) {
+                    vector[i] = -1;
+                } else {
+                    vector[i] = stack.peek();
+                }
+            }
+            stack.push(nums[i]);
+        }
+        return vector;
+    }
+}
