@@ -1,0 +1,22 @@
+/**
+ * Two pointer
+ * Leetcode: 167
+ **/
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int i = 0, j = numbers.length-1;
+        int left, right;
+        while (i < j) {
+            left = numbers[i];
+            right = numbers[j];
+            if (left + right == target) {
+                break;
+            } else if(left + right < target) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+        return new int[] {i+1, j+1};       
+    }
+}
