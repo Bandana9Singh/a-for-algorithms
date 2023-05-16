@@ -1,0 +1,22 @@
+/**
+ * Leetcode: 42
+ **/
+class Solution {
+    public int trap(int[] height) {
+        int[] maxOnLeft = new int[height.length];
+        int[] maxOnRight = new int[height.length];
+        int i, sum = 0;
+        maxOnLeft[0] = height[0];
+        for(i = 1; i < height.length; i++) {
+            maxOnLeft[i] = Math.max(maxOnLeft[i-1], height[i]);
+        }
+        maxOnRight[height.length-1] = height[height.length-1];
+        for(i = height.length-2; i >=0 ; i--) {
+            maxOnRight[i] = Math.max(maxOnRight[i+1], height[i]);
+        }
+        for(i = 0; i < height.length; i++) {
+            sum = sum + (Math.min(maxOnLeft[i], maxOnRight[i]) - height[i]);
+        }
+        return sum;
+    }
+}
