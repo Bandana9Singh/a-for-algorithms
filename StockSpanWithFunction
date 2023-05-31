@@ -1,0 +1,51 @@
+//Leetcode: 901. Online Stock Span
+
+class Pair {
+    //greater on right, index in stack
+    int index;
+    //greater on right, value in stack
+    int value;
+    //Setter constructor
+    public Pair(int index, int value) {
+        this.index=index;
+        this.value=value;
+    }
+}
+
+class StockSpanner {
+    Stack<Pair> stack;
+    //ArrayList<Integer> list = new List<>();
+    public StockSpanner() {
+        stack = new Stack<>();
+    }
+    
+    //Return method 
+    public int next(int price) {
+        int count = 0;
+        if (stack.isEmpty()) {
+            count++;
+        }
+        else if (!stack.isEmpty() && stack.peek().value > price) {
+            count++;
+        } else if (!stack.isEmpty() && stack.peek().value < price) {
+            while (stack.isEmpty() && stack.peek().value < price) {
+                stack.pop();
+                count++;
+            }
+            if (stack.isEmpty()) {
+                count++;
+            } else {
+                count++;
+            }
+        }
+
+        stack.push(new Pair(price, count));
+        return count;   
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
